@@ -1,38 +1,28 @@
 import React, { useState } from "react";
 import "./App.css";
-import Success from "./components/Success";
-import Asking from "./components/Asking";
 import flowerBear from "./flowerBear.gif";
 import madBear from "./madBear.gif";
 
-/**
- * Main App component managing the Valentine's Day proposal.
- *
- * @returns {JSX.Element} JSX element representing the App component.
- */
 const App = () => {
-  // State to track acceptance and rejection
   const [accepted, setAccepted] = useState(false);
   const [rejected, setRejected] = useState(false);
   const [noButtonText, setNoButtonText] = useState("No");
   const [lastRejectedIndex, setLastRejectedIndex] = useState(-1);
 
-  // Handler for accepting the proposal
   const handleAccept = () => {
     setAccepted(true);
   };
 
-  // Handler for rejecting the proposal
   const handleReject = () => {
     setRejected(true);
-    // Array of rejection messages
+
     const rejectionTexts = [
       "Are you sure?",
-      "Maybe try again?",
       "Think again!",
-      "Loser :(",
+      "Pleaseee 😭",
+      "You can’t say no 😤",
     ];
-    // Randomly select a rejection message
+
     let randomIndex;
     do {
       randomIndex = Math.floor(Math.random() * rejectionTexts.length);
@@ -45,19 +35,31 @@ const App = () => {
   return (
     <div className="App">
       <div className="App-body">
-        {/* Asking to be my Valentine */}
-        {!accepted && (
-          <Asking
-            gif={rejected ? madBear : flowerBear}
-            altText={rejected ? "Rejected Bear" : "I love you Bear"}
-            handleAccept={handleAccept}
-            handleReject={handleReject}
-            noButtonText={noButtonText}
-          />
-        )}
+        {!accepted ? (
+          <>
+            <h1 style={{ marginBottom: "20px" }}>
+              Tedu, will you be my Valentine? ❤️
+            </h1>
 
-        {/* She said YES! */}
-        {accepted && <Success />}
+            <img
+              src={rejected ? madBear : flowerBear}
+              alt="Valentine Bear"
+              style={{ width: "250px", marginBottom: "20px" }}
+            />
+
+            <div>
+              <button onClick={handleAccept} className="yes-button">
+                Yes 💖
+              </button>
+
+              <button onClick={handleReject} className="no-button">
+                {noButtonText}
+              </button>
+            </div>
+          </>
+        ) : (
+          <h1>Yayyyy!! ❤️💍</h1>
+        )}
       </div>
     </div>
   );
